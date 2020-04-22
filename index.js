@@ -78,16 +78,9 @@ async function run() {
     console.log('Packaged all helm charts.');
     console.log(`Building index.yaml`);
 
-    await exec.exec(`helm repo index`, `./output/${chartsDir}`);
+    await exec.exec(`helm repo index`, `./output`, { cwd: `./${chartsDir}` });
 
     console.log(`Successfully build index.yaml.`);
-
-    const cnameExists = await ioUtil.exists('./CNAME');
-    if (cnameExists) {
-      console.log('Copying CNAME over.');
-      await io.cp('./CNAME', './output/CNAME', { force: true });
-      console.log('Finished copying CNAME.');
-    }
 
     await exec.exec(`git add`, ['.'], { cwd: './output' });
     await exec.exec(
