@@ -70,7 +70,7 @@ async function run() {
       console.log(`Packaging helm chart in directory ${chartDirname}`);
       await exec.exec(
         `helm package`,
-        [chartDirname, '--destination', '../output'],
+        [chartDirname, '--destination', '../output/charts'],
         { cwd: `./${chartsDir}` }
       );
     }
@@ -78,7 +78,7 @@ async function run() {
     console.log('Packaged all helm charts.');
     console.log(`Building index.yaml`);
 
-    await exec.exec(`helm repo index`, `../output`, { cwd: `./${chartsDir}` });
+    await exec.exec(`helm repo index`, `../output/charts`, { cwd: `./${chartsDir}` });
 
     console.log(`Successfully build index.yaml.`);
 
